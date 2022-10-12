@@ -5,33 +5,28 @@ import React from "react";
 // define component 
 
 export default class Cars extends React.Component {
-
-
     constructor(props){
         super(props);
         this.state = {
             stateBool: true,
+            buttonTitle: "Click Me!"
         }
     }
 
     doSomething = () => {
+        this.setState({buttonTitle: "Clicked"})
         console.log("Button Pressed")
     }
 
-
-
     render(){
+        console.log("render")
         return(
             <View style={styles.container}>
             <Text> This is our Cars Component</Text>
-            <Button title="Click Me!" onPress={this.doSomething}></Button>
+            <Button title={this.state.buttonTitle} onPress={this.doSomething}></Button>
             </View>
         )
     }
-
-
-
-
 }
 
 
