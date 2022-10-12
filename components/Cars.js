@@ -14,8 +14,16 @@ export default class Cars extends React.Component {
     }
 
     doSomething = () => {
-        this.setState({buttonTitle: "Clicked"})
-        console.log("Button Pressed")
+        if(this.state.stateBool){
+            this.setState({buttonTitle: "Clicked"})
+        }
+        else{
+            this.setState({buttonTitle: "Click Me!"})
+        }
+        this.setState({stateBool: !this.state.stateBool})
+        
+
+        console.log("Button Pressed: ", this.state.stateBool)
     }
 
     render(){
