@@ -32,18 +32,28 @@ export default class Cars extends React.Component {
     }
 
     render(){
-        console.log("render")
+        console.log("make state value:", this.state.make)
         return(
             <View style={styles.container}>
                 <View style={styles.form}>
                     <Text style={styles.title}> New Cars Submission Form</Text>
 
                     <Text> Make</Text>
-                    <TextInput style={styles.textinput}></TextInput>
+                    <TextInput 
+                        style={styles.textinput}
+                        defaultValue={this.state.make}
+                        onChangeText={(e) => this.setState({make: e})}
+                    ></TextInput>
+
+
                     <Text> Model</Text>
                     <TextInput style={styles.textinput}></TextInput>
+
+
                     <Text> Year</Text>
                     <TextInput style={styles.textinput}></TextInput>
+
+
                     <Text> Odometer</Text>
                     <TextInput style={styles.textinput}></TextInput>
 
