@@ -17,6 +17,7 @@ export default class Cars extends React.Component {
             odometer: "",
             data:[]
         }
+        this.getCars = this.getCars.bind(this);
     }
 
     doSomething = () => {
@@ -55,17 +56,18 @@ export default class Cars extends React.Component {
 
     }
 
-    async componentDidMount(){
-        const response =  await fetchCars();
-        this.setState({data:response})
-    }
-
-    // async getCars(){
-
-    //     const response =  await fetchCars()
+    // async componentDidMount(){
+    //     const response =  await fetchCars();
     //     this.setState({data:response})
-    //     return
     // }
+
+   async getCars(){
+
+        const response =  await fetchCars()
+        console.log(response)
+        this.setState({data:response})
+        return
+    }
 
     render() {
 
@@ -107,7 +109,7 @@ export default class Cars extends React.Component {
 
                     <Button title="Create" onPress={this.onFormSubmit}></Button>
                 </View>
-                {/* <Button title="Get All" onProcess={this.getCars} ></Button> */}
+                <Button title="Get All" onPress={this.getCars} ></Button>
 
                 {this.state.data.map((car) => <Text key={car.car_id}>{car.make} {car.model} -  {car.year} with {car.odometer} miles on it. CarId({car.car_id})  </Text> )}
           
