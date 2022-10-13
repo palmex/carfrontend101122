@@ -7,7 +7,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Car Maintentance Portal</Text>
-      <Cars></Cars>
+      
+      <Cars buttonColor={"#967334"}></Cars>
       <StatusBar style="auto" />
     </View>
   );
