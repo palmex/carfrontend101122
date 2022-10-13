@@ -14,7 +14,8 @@ export default class Cars extends React.Component {
             make: "",
             model: "",
             year: "",
-            odometer: ""
+            odometer: "",
+            data:[]
         }
     }
 
@@ -33,6 +34,16 @@ export default class Cars extends React.Component {
         console.log("user input:", this.state)
         // send data to our backend
 
+        if (this.state.model === ""){
+            alert('Please enter Model Type')
+            return
+        }
+
+        if (isNaN(this.state.year)){
+            alert('Please enter valid year')
+            return
+        }
+
         let carBody = {
             "make":this.state.make,
             "model":this.state.model,
@@ -43,6 +54,18 @@ export default class Cars extends React.Component {
         createNewCar(carBody)
 
     }
+
+    async componentDidMount(){
+        const response =  await fetchCars();
+        this.setState({data:response})
+    }
+
+    // async getCars(){
+
+    //     const response =  await fetchCars()
+    //     this.setState({data:response})
+    //     return
+    // }
 
     render() {
 
@@ -84,12 +107,59 @@ export default class Cars extends React.Component {
 
                     <Button title="Create" onPress={this.onFormSubmit}></Button>
                 </View>
+                {/* <Button title="Get All" onProcess={this.getCars} ></Button> */}
+
+                {this.state.data.map((car) => <Text key={car.car_id}>{car.make} {car.model} -  {car.year} with {car.odometer} miles on it. CarId({car.car_id})  </Text> )}
+          
                 {/* <Button title={this.state.buttonTitle} onPress={this.doSomething} color={this.state.buttonColor}></Button> */}
             </View>
         )
     }
 }
 
+
+async function fetchCars() {
+    // dispatch(companiesLoading(true));
+  
+    let headers = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin': 'http://localhost:3000/*',
+      'Accept': "application/json",
+      'admin': "true"
+    }
+    // const headers = 
+    return fetch('http://localhost:3000/' + 'cars/all',{
+      method: 'GET',
+      // mode: 'cors',
+      withCredentials: true,
+      // mode: 'no-cors',
+      headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Origin': 'http://localhost:3000/*',
+        'Accept': "application/json",
+        'admin':'true'
+      }
+    })
+        .then(response => {
+            if (response.ok) {
+                
+                return response.json();
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText)
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+  }
 
 
 async function createNewCar(carDetails){
@@ -126,6 +196,8 @@ async function createNewCar(carDetails){
     }
     )
 }
+
+
 
 
 // styling 
